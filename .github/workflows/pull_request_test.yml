@@ -1,0 +1,26 @@
+name: Create test branch PR
+
+# Run when a PR is merged
+#on:
+#  pull_request:
+#    types: [closed]
+
+on:
+  push:
+    branches:
+    - test-actions
+
+jobs:
+  pull-request:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v1
+    - name: pull-request
+      uses: repo-sync/pull-request@v2
+      with:
+        destination_branch: "test"
+        pr_title: "Pulling ${{ github.ref }} into TEST"
+        pr_body: ":crown: *An automated PR*  This PR will pull all recent merges from DEVELOP into TEST"
+        pr_label: "auto-pr from dev to test"
+        pr_draft: true
+        github_token: ${{ secrets.GITHUB_TOKEN }}
