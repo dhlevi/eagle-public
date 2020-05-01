@@ -1,61 +1,5 @@
 @import "~assets/styles/base/base.scss";
 
-.table {
-	border: none;
-
-	thead th{
-    background-color: #e8eff5;
-    padding: .7rem 0.5rem .85rem;
-    border: none;
-  }
-
-  td {
-    border: none;
-  }
-
-  tr {
-    border: none;
-  }
-
-  tbody td {
-    padding: 1.25rem 0.5rem;
-  }
-
-	tr td:first-child,
-	tr th:first-child {
-    padding-left: 1rem;
-    @media screen and (max-width: 600px) {
-      padding-left: .5rem;
-    }
-	}
-
-	thead {
-		border-bottom: none;
-	}
-}
-
-.no-sort {
-  cursor: default !important;
-}
-.ant-pagination-item:focus, .ant-pagination-item:hover, .ant-btn-primary, .ant-select-dropdown-menu-item-active,
-.ant-pagination-item-active, .ant-select-dropdown-menu-item:hover {
-    background: #007bff !important;
-    color: #fff !important;
-}
-.ant-pagination-item-active a, .ant-pagination-item:focus a, .ant-pagination-item:hover a {
-    color: #fff !important;
-}
-.ant-pagination-item-container .ant-pagination-item-link-icon {
-    color: #007bff;
-}
-.ant-pagination-prev:hover .ant-pagination-item-link, .ant-pagination-next:hover .ant-pagination-item-link {
-    background: #007bff !important;
-    color: #fff !important;
-}
-.show_all_btn {
-    margin-left: 10px;
-}
-
 .search-list {
     &__options {
       @include flex(0 0 auto);
@@ -211,6 +155,30 @@ form {
         }
     }
 
+    .milestone-filters {
+        margin-left: 8px;
+    }
+
+    .date-filters {
+        margin-left: 8px;
+    }
+
+    .author-filters {
+        margin-left: 8px;
+
+        .filter-border {
+            min-width: 230px;
+        }
+    }
+
+    .type-filters {
+        margin-left: 8px;
+    }
+
+    .projectPhase-filters {
+        margin-left: 8px;
+    }
+
     .sub-filter {
         margin-left: 0px;
         margin-bottom: -15px;
@@ -218,6 +186,30 @@ form {
 
     .btn {
         margin: 8px 0px 8px 8px;
+    }
+
+    .projectType-btn {
+        width: 155px;
+    }
+
+    .decision-btn {
+        width: 155px;
+    }
+
+    .pcp-btn {
+        width: 230px;
+    }
+
+    .milestone-btn {
+        width: 130px;
+    }
+
+    .date-btn {
+        width: 175px;
+    }
+
+    .author-btn {
+        width: 190px;
     }
 
     .calendar {
@@ -244,7 +236,8 @@ form {
     .search-button {
         position: absolute;
         right: 8px;
-        bottom: -7px;
+        bottom: 42px;
+
         min-width: 10rem;
         font-weight: 700;
         background: #fcba18;
@@ -382,31 +375,3 @@ $sr-table-row-bg: #f7f8fa;
 .show_all_btn {
     margin-left: 10px;
 }
-
-.btn-group-toggle > .btn {
-    margin-bottom: 0;
-    border-radius: 24px;
-    background: none;
-    color: #003367;
-    border: 2px solid #003367;
-    font-weight: 600;
-    margin-right: 10px;
-    &:hover {
-      background: #fcb118;
-    }
-
-    &.active {
-        background: #003367;
-        color: #fff;
-    }
-  }
-
-  .active-flag {
-    background: #5BB75C;
-    color: #fff;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    padding: 3px 8px 4px;
-    border-radius: 5px;
-    font-size: .8rem;
-  }

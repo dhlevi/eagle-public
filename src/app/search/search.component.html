@@ -1,0 +1,33 @@
+<div class="spinner-container" *ngIf="loading">
+    <div class="spinner-new rotating"></div>
+</div>
+
+<main *ngIf="!loading">
+    <div class="container">
+        <div class="hero-banner__content">
+            <h1>Environmental Assessments in British Columbia</h1>
+            <p>Use the search below to find documents across all Projects. Click on a row or download button to download the document. Click on the project name to view the project.</p>
+        </div>
+    </div>
+    <section class="search-list table-container">
+        <div class="container">
+            <div class="container-fluid-padding">
+            <h1>Search Documents Across All Projects</h1>
+                <!-- NOT ALL -->
+            <div>
+                <app-table-template *ngIf="filters.length !== 0"
+                                    [columns]="documentTableColumns"
+                                    [data]="documentTableData"
+                                    (onColumnSort)='setColumnSort($event)'
+                                    [showSearch]="true"
+                                    (onSearch)='executeSearch($event)'
+                                    [showAdvancedSearch]="true"
+                                    [searchDisclaimer]="constants.docSearchDisclaimer"
+                                    [filters]="filters"
+                                    [persistenceId]="'globalDocSearch'">
+                </app-table-template>
+            </div>
+        </div>
+    </div>
+    </section>
+</main>
