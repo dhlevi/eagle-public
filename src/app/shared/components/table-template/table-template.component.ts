@@ -201,10 +201,15 @@ export class TableTemplateComponent implements OnInit, OnChanges, OnDestroy {
 
     // if the current filters/keyword does not match previous filter/keyword
     // reset the page and sortBy back to defaults. Persist the changed values
-    if (this.data.paginationData.previousKeyword !== this.keywords ||
-        JSON.stringify(this.data.paginationData.previousFilters) !== JSON.stringify(newFilters)) {
+
+    if ((this.data.paginationData.previousKeyword != null && this.data.paginationData.previousKeyword !== this.keywords) ||
+       (this.data.paginationData.previousFilters != null && JSON.stringify(this.data.paginationData.previousFilters) !== JSON.stringify(newFilters))) {
       this.data.paginationData.currentPage = 1;
-      this.data.paginationData.sortBy = this.data.paginationData.defaultSortBy;
+      // for default searches, also include the score. This will bubble
+      // the highest related match up to the top, but will only trigger
+      // that behaviour if the user has entered a new search term and if
+      // the data supports the score attribute
+      this.data.paginationData.sortBy = '-score,' + this.data.paginationData.defaultSortBy;
       this.data.paginationData.previousFilters = { ...newFilters };
       this.data.paginationData.previousKeyword = this.keywords;
       // because we're changing the values here, fire an emit
@@ -263,7 +268,7 @@ export class TableTemplateComponent implements OnInit, OnChanges, OnDestroy {
     if (filter.selectedOptions && filter.selectedOptions.length > 0) {
       filtersForAPI[filter.id] = '';
       filter.selectedOptions.forEach(option => {
-        if (option.hasOwnProperty('code')) {
+        if (option.hasOwnProperty('code') && option['code']) {
           filtersForAPI[filter.id] += (filter.id === 'pcp' ? option.code : option.name) + ',';
         } else if (option.hasOwnProperty('_id')) {
           filtersForAPI[filter.id] += option._id + ',';

@@ -22,7 +22,8 @@ export class ApiService {
   public isMS: boolean; // IE, Edge, etc
   public apiPath: string;
   public adminUrl: string;
-  public env: string;  // Could be anything per Openshift settings but generally is one of 'local' | 'dev' | 'test' | 'prod' | 'demo'
+  public env: string;  // Could be anything per Openshift environment variables  but generally is one of 'local' | 'dev' | 'test' | 'prod' | 'demo' | 'hotfix'
+  public bannerColour: string;  // This is the colour of the banner that you see in the header, and could be anything per Openshift environment variables but must correspond with the css in header.component.scss e.g. red | orange | green | yellow | purple
 
 
   constructor(
@@ -38,10 +39,12 @@ export class ApiService {
     const remote_api_path = window.localStorage.getItem('from_public_server--remote_api_path');
     const remote_admin_path = window.localStorage.getItem('from_public_server--remote_admin_path');
     const deployment_env = window.localStorage.getItem('from_public_server--deployment_env');
+    const banner_colour = window.localStorage.getItem('from_public_server--banner_colour');
 
     this.apiPath = (_.isEmpty(remote_api_path)) ? 'http://localhost:3000/api/public' : remote_api_path;
     this.adminUrl = (_.isEmpty(remote_admin_path)) ? 'http://localhost:4200/admin' : remote_admin_path;
     this.env = (_.isEmpty(deployment_env)) ? 'local' : deployment_env;
+    this.bannerColour = (_.isEmpty(banner_colour)) ? 'red' : banner_colour;
   }
 
   handleError(error: any): Observable<any> {
@@ -113,7 +116,7 @@ export class ApiService {
   //
   // Searching
   //
-  searchKeywords(keys: string, dataset: string, fields: any[], pageNum: number, pageSize: number, projectLegislation: string = null, sortBy: string = null, queryModifier: object = {}, populate = false, secondarySort: string = null, filter: object = {}): Observable<SearchResults[]> {
+  searchKeywords(keys: string, dataset: string, fields: any[], pageNum: number, pageSize: number, projectLegislation: string = null, sortBy: string = null, queryModifier: object = {}, populate = false, secondarySort: string = null, filter: object = {}, fuzzy: boolean = false): Observable<SearchResults[]> {
     projectLegislation = (projectLegislation === '') ? 'default' : projectLegislation;
     let queryString = `search?dataset=${dataset}`;
     if (fields && fields.length > 0) {
@@ -151,6 +154,7 @@ export class ApiService {
       });
     }
     queryString += `&fields=${this.buildValues(fields)}`;
+    queryString += '&fuzzy=' + fuzzy;
     return this.http.get<SearchResults[]>(`${this.apiPath}/${queryString}`, {});
     // if (dataset === 'Project') {
     //   searchResults = searchResults.currentProjectData
@@ -238,6 +242,7 @@ export class ApiService {
       'legislation',
       'featuredDocuments',
       'projectCAC',
+      'projectCACPublished',
       'cacEmail'
     ];
 
@@ -311,6 +316,7 @@ export class ApiService {
       'delete',
       'featuredDocuments',
       'projectCAC',
+      'projectCACPublished',
       'cacEmail'
     ];
     let queryString = `project/${id}?populate=true`;
@@ -476,7 +482,8 @@ export class ApiService {
       'instructions',
       'openHouses',
       'project',
-      'relatedDocuments'
+      'relatedDocuments',
+      'commentTip'
     ];
     const queryString = 'commentperiod/' + id + '?fields=' + this.buildValues(fields);
     return this.http.get<CommentPeriod[]>(`${this.apiPath}/${queryString}`, {});

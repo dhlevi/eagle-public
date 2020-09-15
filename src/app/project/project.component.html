@@ -9,7 +9,7 @@
                             <div class="col-md-6">
                                 <h2 class="mb-0">Public Comment Period is {{project.commentPeriodForBanner.commentPeriodStatus}}</h2>
                                 <h5>{{project.commentPeriodForBanner.dateStarted | date: 'MMMM d'}} -
-                                {{project.commentPeriodForBanner.longEndDate.format('MMMM DD @ hh:mm z')}}</h5>
+                                {{project.commentPeriodForBanner.longEndDate.format('MMMM DD @ hh:mm A z')}}</h5>
                             </div>
                             <div class="col-md-6 text-right">
                                 <div *ngIf="project.commentPeriodForBanner.commentPeriodStatus !== Open">
@@ -36,7 +36,7 @@
                 </div>
 
                 <div class="main-content col-sm-12 {{ sidebarOpen ? 'col-md-8' : 'wide' }}">
-                    <div *ngIf="project.projectCAC">
+                    <div *ngIf="project.projectCAC && project.projectCACPublished">
                       <div class="row">
                         <div class="col float-right text-right">
                           <i class="align-bottom material-icons" role="presentation" wiid="C937">person</i>
